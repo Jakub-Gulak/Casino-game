@@ -1,3 +1,4 @@
 from gui.dpg import *
 
-dpg.start_dearpygui()
+if __name__ == "__main__":
+    create_gui()
