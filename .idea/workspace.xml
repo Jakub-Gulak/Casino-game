@@ -38,7 +38,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/KubaBuba&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.dpg">
     <configuration name="dpg" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Casino-game" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,8 +83,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.dpg" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
