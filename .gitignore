@@ -1,2 +1,19 @@
-".idea/" 
-"__pycache__/" 
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyCharm/IntelliJ files
+.idea/
+*.iml
+
+# Virtual environment
+venv/
+env/
+
+# VS Code settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
