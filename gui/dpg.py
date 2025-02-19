@@ -26,7 +26,16 @@ def update_position():
 
 def casino_button_click():
     dpg.hide_item("casino_window")
-    dpg.show_item("casino_window2")
+
+    name = dpg.get_value("input_name")
+
+    width = dpg.get_viewport_width()
+    height = dpg.get_viewport_height()
+
+    with dpg.window(tag="casino_window2", pos=(0, 0), width=width, height=height, no_title_bar=True, no_move=True):
+        dpg.add_text(f"Hello, {name} .Welcome to Page 2!")
+
+    dpg.set_primary_window("casino_window2", True)
 
 
 def create_gui():
@@ -56,9 +65,6 @@ def create_gui():
         for i, tag in enumerate(elements):
             dpg.add_image(tag, width=190, height=190, tag=f"{tag}_1")
             dpg.add_image(tag, width=190, height=190, tag=f"{tag}_2")
-
-    with dpg.window(label="Casino_2", tag="casino_window2", show=False):
-        dpg.add_text("page 2")
 
     dpg.set_viewport_resize_callback(update_position)
 
