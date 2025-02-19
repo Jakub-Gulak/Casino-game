@@ -11,13 +11,13 @@ def update_position():
     x = (width // 2) - 150
     y = (height // 2) - 25
 
-    dpg.configure_item("card_1", pos=(margin, 100))
-    dpg.configure_item("chip_1", pos=(margin, 400))
-    dpg.configure_item("machine_1", pos=(margin, 700))
+    dpg.configure_item("cards_tag_1", pos=(margin, 100))
+    dpg.configure_item("chips_tag_1", pos=(margin, 400))
+    dpg.configure_item("machines_tag_1", pos=(margin, 700))
 
-    dpg.configure_item("card_2", pos=(width - img_size - margin, 100))
-    dpg.configure_item("chip_2", pos=(width - img_size - margin, 400))
-    dpg.configure_item("machine_2", pos=(width - img_size - margin, 700))
+    dpg.configure_item("cards_tag_2", pos=(width - img_size - margin, 100))
+    dpg.configure_item("chips_tag_2", pos=(width - img_size - margin, 400))
+    dpg.configure_item("machines_tag_2", pos=(width - img_size - margin, 700))
 
     dpg.configure_item("enter-name_text", pos=(x + 70, y - 60))
     dpg.configure_item("input_name", pos=(x, y))
@@ -25,7 +25,8 @@ def update_position():
 
 
 def casino_button_click():
-    print("siema")
+    dpg.hide_item("casino_window")
+    dpg.show_item("casino_window2")
 
 
 def create_gui():
@@ -47,20 +48,22 @@ def create_gui():
 
     with dpg.window(label="Casino", tag="casino_window"):
         dpg.add_text("Your name:", tag="enter-name_text")
-        dpg.add_input_text(width=300, height=50, tag="input_name")
-        dpg.add_button(label="Go to Casino!", width=300, height=50, tag="casino_button", callback=casino_button_click)
+        dpg.add_input_text(width=300, tag="input_name")
+        dpg.add_button(label="Go to Casino!", width=300, tag="casino_button", callback=casino_button_click)
 
-        dpg.add_image("cards_tag", width=190, height=190, tag="card_1")
-        dpg.add_image("cards_tag", width=190, height=190, tag="card_2")
-        dpg.add_image("chips_tag", width=190, height=190, tag="chip_1")
-        dpg.add_image("chips_tag", width=190, height=190, tag="chip_2")
-        dpg.add_image("machines_tag", width=190, height=190, tag="machine_1")
-        dpg.add_image("machines_tag", width=190, height=190, tag="machine_2")
+        elements = ["cards_tag", "chips_tag", "machines_tag"]
+
+        for i, tag in enumerate(elements):
+            dpg.add_image(tag, width=190, height=190, tag=f"{tag}_1")
+            dpg.add_image(tag, width=190, height=190, tag=f"{tag}_2")
+
+    with dpg.window(label="Casino_2", tag="casino_window2", show=False):
+        dpg.add_text("page 2")
 
     dpg.set_viewport_resize_callback(update_position)
 
     dpg.set_primary_window("casino_window", True)
-    dpg.create_viewport(title='Custom Title', width=1400, height=900, resizable=True)
+    dpg.create_viewport(title='Casino', width=1400, height=900, resizable=True)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     update_position()
