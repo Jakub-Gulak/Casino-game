@@ -45,8 +45,7 @@ def create_gui():
     with dpg.texture_registry(show=False):
         dpg.add_static_texture(width=cards_width, height=cards_height, default_value=cards_data, tag="cards_tag")
         dpg.add_static_texture(width=chips_width, height=chips_height, default_value=chips_data, tag="chips_tag")
-        dpg.add_static_texture(width=machines_width, height=machines_height, default_value=machines_data,
-                               tag="machines_tag")
+        dpg.add_static_texture(width=machines_width, height=machines_height, default_value=machines_data, tag="machines_tag")
 
     with dpg.window(label="Casino", tag="casino_window"):
         dpg.add_text("Your name:", tag="enter-name_text")
@@ -63,6 +62,8 @@ def create_gui():
 
     dpg.set_primary_window("casino_window", True)
     dpg.create_viewport(title='Casino', width=1400, height=900, resizable=True)
+    dpg.set_viewport_min_width(900)
+    dpg.set_viewport_min_height(950)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     update_position()
