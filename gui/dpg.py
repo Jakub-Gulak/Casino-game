@@ -25,10 +25,17 @@ def update_position():
     dpg.configure_item("input_name", pos=(x, y))
     dpg.configure_item("casino_button", pos=(x, y + 60))
 
+    dpg.configure_item("name_error_text", pos=((width - 350) // 2 - margin, 50))
+
 
 def casino_button_click():
-    dpg.hide_item("casino_window")
-    show_games_page()
+    name = dpg.get_value("input_name")
+    if len(name) < 3 or not name.isalpha():
+        dpg.configure_item("name_error_text", show=True)
+    else:
+        dpg.configure_item("name_error_text", show=False)
+        dpg.hide_item("casino_window")
+        show_games_page()
 
 
 def create_gui():
@@ -45,12 +52,15 @@ def create_gui():
     with dpg.texture_registry(show=False):
         dpg.add_static_texture(width=cards_width, height=cards_height, default_value=cards_data, tag="cards_tag")
         dpg.add_static_texture(width=chips_width, height=chips_height, default_value=chips_data, tag="chips_tag")
-        dpg.add_static_texture(width=machines_width, height=machines_height, default_value=machines_data, tag="machines_tag")
+        dpg.add_static_texture(width=machines_width, height=machines_height, default_value=machines_data,
+                               tag="machines_tag")
 
     with dpg.window(label="Casino", tag="casino_window"):
         dpg.add_text("Your name:", tag="enter-name_text")
         dpg.add_input_text(width=300, tag="input_name")
         dpg.add_button(label="Go to Casino!", width=300, tag="casino_button", callback=casino_button_click)
+        dpg.add_text("Name must be at least 3 characters\n     long and only contains letters.", tag="name_error_text",
+                     show=False, color=(255, 0, 0))
 
         elements = ["cards_tag", "chips_tag", "machines_tag"]
 
