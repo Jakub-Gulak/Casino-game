@@ -19,8 +19,11 @@ def update_gamepage_position():
 
 
 def roulette_button_click():
+    if dpg.does_item_exist("roulette_window"):
+        dpg.show_item("roulette_window")
+    else:
+        roulette_page()
     dpg.hide_item("casino_window2")
-    roulette_page()
 
 
 def machine_button_click():

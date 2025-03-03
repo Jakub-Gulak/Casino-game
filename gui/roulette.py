@@ -11,6 +11,7 @@ def update_gamepage_position():
     dpg.configure_item("colors_button", pos=((width - 300) // 2, (height // 2) - 50))
     dpg.configure_item("exact_numbers_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("secventions_button", pos=((width - 300) // 2, (height // 2) + 50))
+    dpg.configure_item("back_button", pos=((width - 300) // 2, (height // 2) + 300))
 
 
 def colors_button_click():
@@ -25,6 +26,11 @@ def secventions_button_click():
     pass
 
 
+def back_button_click():
+    dpg.hide_item("roulette_window")
+    dpg.show_item("casino_window2")
+
+
 def roulette_page():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()
@@ -37,6 +43,8 @@ def roulette_page():
         dpg.add_button(label="Exact Numbers", width=300, tag="exact_numbers_button",
                        callback=exact_numbers_button_click)
         dpg.add_button(label="Secventions", width=300, tag="secventions_button", callback=secventions_button_click)
+
+        dpg.add_button(label="Back", width=300, tag="back_button", callback=back_button_click)
 
     dpg.set_primary_window("roulette_window", True)
 
