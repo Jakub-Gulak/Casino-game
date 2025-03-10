@@ -3,6 +3,7 @@ import dearpygui.dearpygui as dpg
 from gui.roulette import roulette_page
 from gui.machine import machine_page
 from gui.blackjack import blackjack_page
+from gui.end import end_page
 
 
 def update_gamepage_position():
@@ -16,6 +17,7 @@ def update_gamepage_position():
     dpg.configure_item("roulette_button", pos=((width - 300) // 2, (height // 2) - 50))
     dpg.configure_item("slot_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("blackjack_button", pos=((width - 300) // 2, (height // 2) + 50))
+    dpg.configure_item("leave_casino_button", pos=((width - 300) // 2, (height // 2) + 400))
 
 
 def roulette_button_click():
@@ -36,6 +38,11 @@ def blackjack_button_click():
     blackjack_page()
 
 
+def leave_casino_button_click():
+    dpg.hide_item("casino_window2")
+    end_page()
+
+
 def show_games_page():
     name = dpg.get_value("input_name")
     greeting_text = f"Hello, {name}."
@@ -48,6 +55,8 @@ def show_games_page():
         dpg.add_button(label="Roulette", width=300, tag="roulette_button", callback=roulette_button_click)
         dpg.add_button(label="Slot Machine", width=300, tag="slot_button", callback=machine_button_click)
         dpg.add_button(label="BlackJack", width=300, tag="blackjack_button", callback=blackjack_button_click)
+        dpg.add_button(label="Leave The Casino", width=300, tag="leave_casino_button",
+                       callback=leave_casino_button_click)
 
     dpg.set_primary_window("casino_window2", True)
 
