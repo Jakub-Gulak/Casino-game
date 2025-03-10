@@ -17,7 +17,7 @@ def update_gamepage_position():
     dpg.configure_item("roulette_button", pos=((width - 300) // 2, (height // 2) - 50))
     dpg.configure_item("slot_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("blackjack_button", pos=((width - 300) // 2, (height // 2) + 50))
-    dpg.configure_item("leave_casino_button", pos=((width - 300) // 2, (height // 2) + 400))
+    dpg.configure_item("leave_casino_button", pos=((width - 300) // 2, (height // 2) + 300))
 
 
 def roulette_button_click():
@@ -29,8 +29,11 @@ def roulette_button_click():
 
 
 def machine_button_click():
+    if dpg.does_item_exist("slot_machine_window"):
+        dpg.show_item("slot_machine_window")
+    else:
+        machine_page()
     dpg.hide_item("casino_window2")
-    machine_page()
 
 
 def blackjack_button_click():
