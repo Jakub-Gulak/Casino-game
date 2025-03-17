@@ -42,8 +42,11 @@ def machine_button_click():
 
 
 def blackjack_button_click():
+    if dpg.does_item_exist("blackjack_window"):
+        dpg.show_item("blackjack_window")
+    else:
+        blackjack_page()
     dpg.hide_item("casino_window2")
-    blackjack_page()
 
 
 def leave_casino_button_click():
