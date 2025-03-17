@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
 
+from gui.player import player
+
 
 def update_gamepage_position():
     width = dpg.get_viewport_width()
@@ -19,8 +21,8 @@ def end_page():
     height = dpg.get_viewport_height()
 
     with dpg.window(tag="end_window", pos=(0, 0), width=width, height=height, no_title_bar=True, no_move=True):
-        dpg.add_text("You won X money", tag='end_text')
-        dpg.add_button(label="End", width=300, tag="end_button", callback=end_button_click)
+        dpg.add_text(f"Game Over. You ended with {player.get_money()}$ money.", tag="end_text")
+        dpg.add_button(label="EXIT", width=300, tag="end_button", callback=end_button_click)
 
     dpg.set_primary_window("end_window", True)
 
