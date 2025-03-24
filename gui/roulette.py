@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
 
+from gui.roulette_colors import roulette_colors_page
+
 
 def update_gamepage_position():
     width = dpg.get_viewport_width()
@@ -15,7 +17,11 @@ def update_gamepage_position():
 
 
 def colors_button_click():
-    pass
+    if dpg.does_item_exist("roulette_colors_window"):
+        dpg.show_item("roulette_colors_window")
+    else:
+        roulette_colors_page()
+    dpg.hide_item("roulette_window")
 
 
 def exact_numbers_button_click():
