@@ -1,4 +1,5 @@
 import dearpygui.dearpygui as dpg
+from .roulette_logic import roulette_spin
 
 
 def update_gamepage_position():
@@ -21,6 +22,7 @@ def back_button_click():
 
 def red_button_click():
     pass
+    # roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
 
 
 def black_button_click():
@@ -59,8 +61,10 @@ def roulette_colors_page():
         dpg.add_text(f"Roulette Colors", tag='roulette_colors_text')
 
         red_button = dpg.add_button(label="Red", width=300, tag="roulette_red_button", callback=red_button_click)
-        black_button = dpg.add_button(label="Black", width=300, tag="roulette_black_button", callback=black_button_click)
-        green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button", callback=green_button_click)
+        black_button = dpg.add_button(label="Black", width=300, tag="roulette_black_button",
+                                      callback=black_button_click)
+        green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button",
+                                      callback=green_button_click)
 
         dpg.add_button(label="Back", width=300, tag="roulette_colors_back_button", callback=back_button_click)
 
