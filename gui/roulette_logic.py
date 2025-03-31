@@ -16,6 +16,8 @@ ROULETTE_NUMBERS = [
 
 
 def roulette_spin(dpg, roulette_text_tag, roulette_button_tag):
+    dpg.set_value(roulette_text_tag, "Spinning...")
+
     steps = random.randint(40, 60)
     delay = 0.01
 

@@ -1,5 +1,5 @@
 import time
-
+from gui.player import player
 import dearpygui.dearpygui as dpg
 from .roulette_logic import roulette_spin
 
@@ -15,6 +15,8 @@ def update_gamepage_position():
     dpg.configure_item("roulette_red_button", pos=((width - 1000) // 2, (height // 2)))
     dpg.configure_item("roulette_black_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("roulette_green_button", pos=((width + 400) // 2, (height // 2)))
+
+    dpg.configure_item("roulette_colors_bet_input", pos=((width - 300) // 2, (height // 2) + 100))
 
 
 def red_button_click():
@@ -51,6 +53,8 @@ def hide_buttons():
     dpg.hide_item("roulette_black_button")
     dpg.hide_item("roulette_green_button")
     dpg.hide_item("roulette_colors_back_button")
+
+    dpg.show_item("roulette_colors_bet_input")
 
 
 def show_buttons():
@@ -92,6 +96,8 @@ def roulette_colors_page():
                                       callback=black_button_click)
         green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button",
                                       callback=green_button_click)
+
+        dpg.add_input_text(label="Bet: ", width=300, tag="roulette_colors_bet_input", default_value="0", show = False)
 
         dpg.add_button(label="Back", width=300, tag="roulette_colors_back_button", callback=back_button_click)
 
