@@ -1,3 +1,5 @@
+import time
+
 import dearpygui.dearpygui as dpg
 from .roulette_logic import roulette_spin
 
@@ -15,22 +17,47 @@ def update_gamepage_position():
     dpg.configure_item("roulette_green_button", pos=((width + 400) // 2, (height // 2)))
 
 
+def red_button_click():
+    color = "red"
+    hide_buttons()
+    roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
+    time.sleep(2)
+    show_buttons()
+
+
+def black_button_click():
+    color = "black"
+    hide_buttons()
+    roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
+    time.sleep(2)
+    show_buttons()
+
+
+def green_button_click():
+    color = "green"
+    hide_buttons()
+    roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
+    time.sleep(2)
+    show_buttons()
+
+
 def back_button_click():
     dpg.hide_item("roulette_colors_window")
     dpg.show_item("roulette_window")
 
 
-def red_button_click():
-    pass
-    # roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
+def hide_buttons():
+    dpg.hide_item("roulette_red_button")
+    dpg.hide_item("roulette_black_button")
+    dpg.hide_item("roulette_green_button")
+    dpg.hide_item("roulette_colors_back_button")
 
 
-def black_button_click():
-    pass
-
-
-def green_button_click():
-    pass
+def show_buttons():
+    dpg.show_item("roulette_red_button")
+    dpg.show_item("roulette_black_button")
+    dpg.show_item("roulette_green_button")
+    dpg.show_item("roulette_colors_back_button")
 
 
 def create_themes():
