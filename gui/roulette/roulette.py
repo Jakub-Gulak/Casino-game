@@ -1,6 +1,8 @@
 import dearpygui.dearpygui as dpg
 
-from gui.roulette_colors import roulette_colors_page
+from gui.roulette.roulette_colors import roulette_colors_page
+from gui.roulette.exact_numbers import exact_numbers_page
+from gui.roulette.secventions import secventions_page
 
 
 def update_gamepage_position():
@@ -25,11 +27,19 @@ def colors_button_click():
 
 
 def exact_numbers_button_click():
-    pass
+    if dpg.does_item_exist("exact_numbers_window"):
+        dpg.show_item("exact_numbers_window")
+    else:
+        exact_numbers_page()
+    dpg.hide_item("roulette_window")
 
 
 def secventions_button_click():
-    pass
+    if dpg.does_item_exist("secventions_window"):
+        dpg.show_item("secventions_window")
+    else:
+        secventions_page()
+    dpg.hide_item("roulette_window")
 
 
 def back_button_click():

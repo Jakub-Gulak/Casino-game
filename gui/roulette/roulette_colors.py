@@ -1,7 +1,6 @@
 import time
-from gui.player import player
 import dearpygui.dearpygui as dpg
-from .roulette_logic import roulette_spin
+from gui.roulette.roulette_logic import roulette_spin
 
 
 def update_gamepage_position():

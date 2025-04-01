@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 
 from gui.player import player
-from gui.roulette import roulette_page
+from gui.roulette.roulette import roulette_page
 from gui.machine import machine_page
 from gui.blackjack import blackjack_page
 from gui.end import end_page
