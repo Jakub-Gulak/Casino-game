@@ -9,6 +9,7 @@ def update_gamepage_position():
     height = dpg.get_viewport_height()
 
     text_width = dpg.get_text_size(dpg.get_value("roulette_colors_text"))[0]
+    dpg.configure_item("text_money", pos=((width - text_width) // 2.12, height // 4))
     dpg.configure_item("roulette_colors_text", pos=((width - text_width) // 2, height // 6))
     dpg.configure_item("roulette_colors_back_button", pos=((width - 300) // 2, (height // 2) + 300))
 
@@ -23,7 +24,7 @@ def update_gamepage_position():
 def roulette_colors_bet_input(sender, app_data):
     try:
         value = int(app_data)
-        if value < player.get_money()+1:
+        if value < player.get_money() + 1:
             dpg.show_item("roulette_red_button")
             dpg.show_item("roulette_black_button")
             dpg.show_item("roulette_green_button")
@@ -71,8 +72,9 @@ def hide_buttons():
     dpg.hide_item("roulette_black_button")
     dpg.hide_item("roulette_green_button")
     dpg.hide_item("roulette_colors_back_button")
-
-    dpg.show_item("roulette_colors_bet_input")
+    dpg.hide_item("roulette_colors_bet_input")
+    dpg.hide_item("bet_text")
+    dpg.hide_item("text_money")
 
 
 def show_buttons():
@@ -80,6 +82,9 @@ def show_buttons():
     dpg.show_item("roulette_black_button")
     dpg.show_item("roulette_green_button")
     dpg.show_item("roulette_colors_back_button")
+    dpg.show_item("roulette_colors_bet_input")
+    dpg.show_item("bet_text")
+    dpg.show_item("text_money")
 
 
 def create_themes():
@@ -102,6 +107,7 @@ def create_themes():
 def roulette_colors_page():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()
+    money_text = f"You have {player.get_money()}$ money."
 
     create_themes()
 
@@ -116,6 +122,7 @@ def roulette_colors_page():
         green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button",
                                       callback=green_button_click, show=False)
 
+        dpg.add_text(f"{money_text}", tag='text_money')
         dpg.add_text("Bet:", tag='bet_text')
         dpg.add_input_text(width=300, tag="roulette_colors_bet_input", default_value="0", show=True,
                            callback=roulette_colors_bet_input)
