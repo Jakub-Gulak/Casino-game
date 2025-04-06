@@ -1,6 +1,7 @@
 import time
 import dearpygui.dearpygui as dpg
 from gui.roulette.roulette_logic import roulette_spin
+from gui.player import player
 
 
 def update_gamepage_position():
@@ -15,7 +16,25 @@ def update_gamepage_position():
     dpg.configure_item("roulette_black_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("roulette_green_button", pos=((width + 400) // 2, (height // 2)))
 
-    dpg.configure_item("roulette_colors_bet_input", pos=((width - 300) // 2, (height // 2) + 100))
+    dpg.configure_item("bet_text", pos=((width - 450) // 2, (height // 2) - 200))
+    dpg.configure_item("roulette_colors_bet_input", pos=((width - 300) // 2, (height // 2) - 200))
+
+
+def roulette_colors_bet_input(sender, app_data):
+    try:
+        value = int(app_data)
+        if value < player.get_money()+1:
+            dpg.show_item("roulette_red_button")
+            dpg.show_item("roulette_black_button")
+            dpg.show_item("roulette_green_button")
+        else:
+            dpg.hide_item("roulette_red_button")
+            dpg.hide_item("roulette_black_button")
+            dpg.hide_item("roulette_green_button")
+    except ValueError:
+        dpg.hide_item("roulette_red_button")
+        dpg.hide_item("roulette_black_button")
+        dpg.hide_item("roulette_green_button")
 
 
 def red_button_click():
@@ -90,13 +109,16 @@ def roulette_colors_page():
                     no_move=True):
         dpg.add_text(f"Roulette Colors", tag='roulette_colors_text')
 
-        red_button = dpg.add_button(label="Red", width=300, tag="roulette_red_button", callback=red_button_click)
+        red_button = dpg.add_button(label="Red", width=300, tag="roulette_red_button", callback=red_button_click,
+                                    show=False)
         black_button = dpg.add_button(label="Black", width=300, tag="roulette_black_button",
-                                      callback=black_button_click)
+                                      callback=black_button_click, show=False)
         green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button",
-                                      callback=green_button_click)
+                                      callback=green_button_click, show=False)
 
-        dpg.add_input_text(label="Bet: ", width=300, tag="roulette_colors_bet_input", default_value="0", show = False)
+        dpg.add_text("Bet:", tag='bet_text')
+        dpg.add_input_text(width=300, tag="roulette_colors_bet_input", default_value="0", show=True,
+                           callback=roulette_colors_bet_input)
 
         dpg.add_button(label="Back", width=300, tag="roulette_colors_back_button", callback=back_button_click)
 
