@@ -19,13 +19,14 @@ def update_gamepage_position():
     dpg.configure_item("roulette_green_button", pos=((width + 400) // 2, (height // 2)))
 
     dpg.configure_item("bet_text", pos=((width - 450) // 2, (height // 2) - 200))
+    dpg.configure_item("result_text", pos=((width - 100) // 2, (height // 2) - 200))
     dpg.configure_item("roulette_colors_bet_input", pos=((width - 300) // 2, (height // 2) - 200))
 
 
 def roulette_colors_bet_input(sender, app_data):
     try:
         value = int(app_data)
-        if value < player.get_money() + 1:
+        if 0 < value <= player.get_money() + 1:
             dpg.show_item("roulette_red_button")
             dpg.show_item("roulette_black_button")
             dpg.show_item("roulette_green_button")
@@ -39,25 +40,50 @@ def roulette_colors_bet_input(sender, app_data):
         dpg.hide_item("roulette_green_button")
 
 
+def update_bet_buttons():
+    current_bet = dpg.get_value("roulette_colors_bet_input")
+    roulette_colors_bet_input(None, current_bet)
+
+
 def red_button_click():
     bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    if bet_amount > player.get_money():
+        return
+
     color = "Red"
     hide_buttons()
+    dpg.set_value("result_text", "")
     result = roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
     if result != color:
         player.money -= bet_amount
+        dpg.set_value("result_text", f"You lose.")
     else:
         player.money = (player.money - bet_amount) + bet_amount * 2
+        dpg.set_value("result_text", f"You win.")
+
+    dpg.set_value("roulette_colors_bet_input", "0")
 
     dpg.set_value("text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
-    time.sleep(2)
-    show_buttons()
+    dpg.show_item("result_text")
+    time.sleep(2.5)
+    if player.get_money() == 0:
+        dpg.hide_item("roulette_red_button")
+        dpg.hide_item("roulette_black_button")
+        dpg.hide_item("roulette_green_button")
+        dpg.show_item("roulette_colors_back_button")
+    else:
+        dpg.enable_item("roulette_red_button")
+        show_buttons()
+        update_bet_buttons()
 
 
 def black_button_click():
     bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    if bet_amount > player.get_money():
+        return
+
     color = "Black"
     hide_buttons()
     result = roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
@@ -66,15 +92,28 @@ def black_button_click():
     else:
         player.money = (player.money - bet_amount) + bet_amount * 2
 
+    dpg.set_value("roulette_colors_bet_input", "0")
+
     dpg.set_value("text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
-    time.sleep(2)
-    show_buttons()
+
+    time.sleep(2.5)
+    if player.get_money() == 0:
+        dpg.hide_item("roulette_red_button")
+        dpg.hide_item("roulette_black_button")
+        dpg.hide_item("roulette_green_button")
+        dpg.show_item("roulette_colors_back_button")
+    else:
+        show_buttons()
+        update_bet_buttons()
 
 
 def green_button_click():
     bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    if bet_amount > player.get_money():
+        return
+
     color = "Green"
     hide_buttons()
     result = roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
@@ -83,11 +122,21 @@ def green_button_click():
     else:
         player.money = (player.money - bet_amount) + bet_amount * 2
 
+    dpg.set_value("roulette_colors_bet_input", "0")
+
     dpg.set_value("text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
-    time.sleep(2)
-    show_buttons()
+
+    time.sleep(2.5)
+    if player.get_money() == 0:
+        dpg.hide_item("roulette_red_button")
+        dpg.hide_item("roulette_black_button")
+        dpg.hide_item("roulette_green_button")
+        dpg.show_item("roulette_colors_back_button")
+    else:
+        show_buttons()
+        update_bet_buttons()
 
 
 def back_button_click():
@@ -151,6 +200,7 @@ def roulette_colors_page():
                                       callback=green_button_click, show=False)
 
         dpg.add_text(f"{money_text}", tag='text_money')
+        dpg.add_text("", tag='result_text')
         dpg.add_text("Bet:", tag='bet_text')
         dpg.add_input_text(width=300, tag="roulette_colors_bet_input", default_value="0", show=True,
                            callback=roulette_colors_bet_input)
