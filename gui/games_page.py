@@ -54,6 +54,10 @@ def leave_casino_button_click():
     end_page()
 
 
+def update_money_text():
+    dpg.set_value("money_text", f"You have {player.get_money()}$ money.")
+
+
 def show_games_page():
     name = dpg.get_value("input_name")
     player.set_name(name)

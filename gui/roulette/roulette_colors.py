@@ -1,5 +1,6 @@
 import time
 import dearpygui.dearpygui as dpg
+
 from gui.roulette.roulette_logic import roulette_spin
 from gui.player import player
 
@@ -39,25 +40,52 @@ def roulette_colors_bet_input(sender, app_data):
 
 
 def red_button_click():
-    color = "red"
+    bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    color = "Red"
     hide_buttons()
-    roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
+    result = roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
+    if result != color:
+        player.money -= bet_amount
+    else:
+        player.money = (player.money - bet_amount) + bet_amount * 2
+
+    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    from gui.games_page import update_money_text
+    update_money_text()
     time.sleep(2)
     show_buttons()
 
 
 def black_button_click():
-    color = "black"
+    bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    color = "Black"
     hide_buttons()
-    roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
+    result = roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
+    if result != color:
+        player.money = player.money - bet_amount
+    else:
+        player.money = (player.money - bet_amount) + bet_amount * 2
+
+    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    from gui.games_page import update_money_text
+    update_money_text()
     time.sleep(2)
     show_buttons()
 
 
 def green_button_click():
-    color = "green"
+    bet_amount = int(dpg.get_value("roulette_colors_bet_input"))
+    color = "Green"
     hide_buttons()
-    roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
+    result = roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
+    if result != color:
+        player.money -= bet_amount
+    else:
+        player.money = (player.money - bet_amount) + bet_amount * 2
+
+    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    from gui.games_page import update_money_text
+    update_money_text()
     time.sleep(2)
     show_buttons()
 

@@ -36,3 +36,5 @@ def roulette_spin(dpg, roulette_text_tag, roulette_button_tag):
     dpg.set_value(roulette_text_tag, f"Result: {final_number} {final_color}")
 
     dpg.disable_item(roulette_button_tag)
+
+    return final_color
