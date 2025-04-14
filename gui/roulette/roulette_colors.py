@@ -5,7 +5,7 @@ from gui.roulette.roulette_logic import roulette_spin
 from gui.player import player
 
 
-def update_gamepage_position():
+def roulette_colors_update_gamepage_position():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()
 
@@ -26,7 +26,7 @@ def update_gamepage_position():
 def roulette_colors_bet_input(sender, app_data):
     try:
         value = int(app_data)
-        if 0 < value <= player.get_money() + 1:
+        if 0 < value <= player.get_money():
             dpg.show_item("roulette_red_button")
             dpg.show_item("roulette_black_button")
             dpg.show_item("roulette_green_button")
@@ -221,5 +221,5 @@ def roulette_colors_page():
 
     dpg.set_primary_window("roulette_colors_window", True)
 
-    dpg.set_viewport_resize_callback(update_gamepage_position)
-    update_gamepage_position()
+    dpg.set_viewport_resize_callback(roulette_colors_update_gamepage_position())
+    roulette_colors_update_gamepage_position()

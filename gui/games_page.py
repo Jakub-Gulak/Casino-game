@@ -7,7 +7,7 @@ from gui.blackjack import blackjack_page
 from gui.end import end_page
 
 
-def update_gamepage_position():
+def games_page_update_gamepage_position():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()
 
@@ -28,6 +28,7 @@ def update_gamepage_position():
 def roulette_button_click():
     if dpg.does_item_exist("roulette_window"):
         dpg.show_item("roulette_window")
+        dpg.set_primary_window("roulette_window", True)
     else:
         roulette_page()
     dpg.hide_item("casino_window2")
@@ -36,6 +37,7 @@ def roulette_button_click():
 def machine_button_click():
     if dpg.does_item_exist("slot_machine_window"):
         dpg.show_item("slot_machine_window")
+        dpg.set_primary_window("slot_machine_window", True)
     else:
         machine_page()
     dpg.hide_item("casino_window2")
@@ -44,6 +46,7 @@ def machine_button_click():
 def blackjack_button_click():
     if dpg.does_item_exist("blackjack_window"):
         dpg.show_item("blackjack_window")
+        dpg.set_primary_window("blackjack_window", True)
     else:
         blackjack_page()
     dpg.hide_item("casino_window2")
@@ -78,5 +81,5 @@ def show_games_page():
 
     dpg.set_primary_window("casino_window2", True)
 
-    dpg.set_viewport_resize_callback(update_gamepage_position)
-    update_gamepage_position()
+    dpg.set_viewport_resize_callback(games_page_update_gamepage_position)
+    games_page_update_gamepage_position()
