@@ -86,18 +86,21 @@ def black_button_click():
 
     color = "Black"
     hide_buttons()
+    dpg.set_value("result_text", "")
     result = roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
     if result != color:
-        player.money = player.money - bet_amount
+        player.money -= bet_amount
+        dpg.set_value("result_text", f"You lose.")
     else:
         player.money = (player.money - bet_amount) + bet_amount * 2
+        dpg.set_value("result_text", f"You win.")
 
     dpg.set_value("roulette_colors_bet_input", "0")
 
     dpg.set_value("text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
-
+    dpg.show_item("result_text")
     time.sleep(2.5)
     if player.get_money() == 0:
         dpg.hide_item("roulette_red_button")
@@ -105,6 +108,7 @@ def black_button_click():
         dpg.hide_item("roulette_green_button")
         dpg.show_item("roulette_colors_back_button")
     else:
+        dpg.enable_item("roulette_black_button")
         show_buttons()
         update_bet_buttons()
 
@@ -116,18 +120,21 @@ def green_button_click():
 
     color = "Green"
     hide_buttons()
+    dpg.set_value("result_text", "")
     result = roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
     if result != color:
         player.money -= bet_amount
+        dpg.set_value("result_text", f"You lose.")
     else:
         player.money = (player.money - bet_amount) + bet_amount * 2
+        dpg.set_value("result_text", f"You win.")
 
     dpg.set_value("roulette_colors_bet_input", "0")
 
     dpg.set_value("text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
-
+    dpg.show_item("result_text")
     time.sleep(2.5)
     if player.get_money() == 0:
         dpg.hide_item("roulette_red_button")
@@ -135,6 +142,7 @@ def green_button_click():
         dpg.hide_item("roulette_green_button")
         dpg.show_item("roulette_colors_back_button")
     else:
+        dpg.enable_item("roulette_green_button")
         show_buttons()
         update_bet_buttons()
 
