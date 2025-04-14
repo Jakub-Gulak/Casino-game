@@ -4,8 +4,11 @@ from gui.roulette.roulette_colors import roulette_colors_page
 from gui.roulette.exact_numbers import exact_numbers_page
 from gui.roulette.secventions import secventions_page
 
+from gui.roulette.roulette_colors import roulette_colors_update_gamepage_position
+from gui.roulette.exact_numbers import exact_numbers_update_gamepage_position
 
-def update_gamepage_position():
+
+def roulette_update_gamepage_position():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()
 
@@ -21,6 +24,7 @@ def update_gamepage_position():
 def colors_button_click():
     if dpg.does_item_exist("roulette_colors_window"):
         dpg.show_item("roulette_colors_window")
+        roulette_colors_update_gamepage_position()
     else:
         roulette_colors_page()
     dpg.hide_item("roulette_window")
@@ -29,6 +33,7 @@ def colors_button_click():
 def exact_numbers_button_click():
     if dpg.does_item_exist("exact_numbers_window"):
         dpg.show_item("exact_numbers_window")
+        exact_numbers_update_gamepage_position()
     else:
         exact_numbers_page()
     dpg.hide_item("roulette_window")
@@ -53,7 +58,7 @@ def roulette_page():
 
     roulette_text = f"Roulette"
 
-    with dpg.window(tag="roulette_window", pos=(0, 0), width=width, height=height, no_title_bar=True, no_move=True):
+    with dpg.window(tag="roulette_window", pos=(0, 0), width=width, height=height, no_title_bar=True, no_move=True, no_bring_to_front_on_focus=True):
         dpg.add_text(roulette_text, tag='roulette_text')
         dpg.add_button(label="Colors", width=300, tag="colors_button", callback=colors_button_click)
         dpg.add_button(label="Exact Numbers", width=300, tag="exact_numbers_button",
@@ -64,5 +69,5 @@ def roulette_page():
 
     dpg.set_primary_window("roulette_window", True)
 
-    dpg.set_viewport_resize_callback(update_gamepage_position)
-    update_gamepage_position()
+    dpg.set_viewport_resize_callback(roulette_update_gamepage_position)
+    roulette_update_gamepage_position()

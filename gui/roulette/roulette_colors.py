@@ -10,7 +10,7 @@ def roulette_colors_update_gamepage_position():
     height = dpg.get_viewport_height()
 
     text_width = dpg.get_text_size(dpg.get_value("roulette_colors_text"))[0]
-    dpg.configure_item("text_money", pos=((width - text_width) // 2.12, height // 4))
+    dpg.configure_item("roulette_colors_text_money", pos=((width - text_width) // 2.12, height // 4))
     dpg.configure_item("roulette_colors_text", pos=((width - text_width) // 2, height // 6))
     dpg.configure_item("roulette_colors_back_button", pos=((width - 300) // 2, (height // 2) + 300))
 
@@ -18,7 +18,7 @@ def roulette_colors_update_gamepage_position():
     dpg.configure_item("roulette_black_button", pos=((width - 300) // 2, (height // 2)))
     dpg.configure_item("roulette_green_button", pos=((width + 400) // 2, (height // 2)))
 
-    dpg.configure_item("bet_text", pos=((width - 450) // 2, (height // 2) - 200))
+    dpg.configure_item("roulette_colors_bet_text", pos=((width - 450) // 2, (height // 2) - 200))
     dpg.configure_item("result_text", pos=((width - 100) // 2, (height // 2) - 200))
     dpg.configure_item("roulette_colors_bet_input", pos=((width - 300) // 2, (height // 2) - 200))
 
@@ -63,7 +63,7 @@ def red_button_click():
 
     dpg.set_value("roulette_colors_bet_input", "0")
 
-    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    dpg.set_value("roulette_colors_text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
     dpg.show_item("result_text")
@@ -97,7 +97,7 @@ def black_button_click():
 
     dpg.set_value("roulette_colors_bet_input", "0")
 
-    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    dpg.set_value("roulette_colors_text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
     dpg.show_item("result_text")
@@ -131,7 +131,7 @@ def green_button_click():
 
     dpg.set_value("roulette_colors_bet_input", "0")
 
-    dpg.set_value("text_money", f"You have {player.money}$ money.")
+    dpg.set_value("roulette_colors_text_money", f"You have {player.money}$ money.")
     from gui.games_page import update_money_text
     update_money_text()
     dpg.show_item("result_text")
@@ -151,6 +151,9 @@ def back_button_click():
     dpg.hide_item("roulette_colors_window")
     dpg.show_item("roulette_window")
 
+    from gui.roulette.roulette import roulette_update_gamepage_position
+    roulette_update_gamepage_position()
+
 
 def hide_buttons():
     dpg.hide_item("roulette_red_button")
@@ -158,8 +161,8 @@ def hide_buttons():
     dpg.hide_item("roulette_green_button")
     dpg.hide_item("roulette_colors_back_button")
     dpg.hide_item("roulette_colors_bet_input")
-    dpg.hide_item("bet_text")
-    dpg.hide_item("text_money")
+    dpg.hide_item("roulette_colors_bet_text")
+    dpg.hide_item("roulette_colors_text_money")
 
 
 def show_buttons():
@@ -168,8 +171,8 @@ def show_buttons():
     dpg.show_item("roulette_green_button")
     dpg.show_item("roulette_colors_back_button")
     dpg.show_item("roulette_colors_bet_input")
-    dpg.show_item("bet_text")
-    dpg.show_item("text_money")
+    dpg.show_item("roulette_colors_bet_text")
+    dpg.show_item("roulette_colors_text_money")
 
 
 def create_themes():
@@ -197,7 +200,7 @@ def roulette_colors_page():
     create_themes()
 
     with dpg.window(tag="roulette_colors_window", pos=(0, 0), width=width, height=height, no_title_bar=True,
-                    no_move=True):
+                    no_move=True, no_bring_to_front_on_focus=True):
         dpg.add_text(f"Roulette Colors", tag='roulette_colors_text')
 
         red_button = dpg.add_button(label="Red", width=300, tag="roulette_red_button", callback=red_button_click,
@@ -207,9 +210,9 @@ def roulette_colors_page():
         green_button = dpg.add_button(label="Green", width=300, tag="roulette_green_button",
                                       callback=green_button_click, show=False)
 
-        dpg.add_text(f"{money_text}", tag='text_money')
+        dpg.add_text(f"{money_text}", tag='roulette_colors_text_money')
         dpg.add_text("", tag='result_text')
-        dpg.add_text("Bet:", tag='bet_text')
+        dpg.add_text("Bet:", tag='roulette_colors_bet_text')
         dpg.add_input_text(width=300, tag="roulette_colors_bet_input", default_value="0", show=True,
                            callback=roulette_colors_bet_input)
 
@@ -221,5 +224,5 @@ def roulette_colors_page():
 
     dpg.set_primary_window("roulette_colors_window", True)
 
-    dpg.set_viewport_resize_callback(roulette_colors_update_gamepage_position())
+    dpg.set_viewport_resize_callback(roulette_colors_update_gamepage_position)
     roulette_colors_update_gamepage_position()

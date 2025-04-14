@@ -38,6 +38,7 @@ def machine_button_click():
     if dpg.does_item_exist("slot_machine_window"):
         dpg.show_item("slot_machine_window")
         dpg.set_primary_window("slot_machine_window", True)
+
     else:
         machine_page()
     dpg.hide_item("casino_window2")
