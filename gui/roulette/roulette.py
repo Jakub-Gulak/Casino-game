@@ -6,6 +6,7 @@ from gui.roulette.secventions import secventions_page
 
 from gui.roulette.roulette_colors import roulette_colors_update_gamepage_position
 from gui.roulette.exact_numbers import exact_numbers_update_gamepage_position
+from gui.roulette.secventions import secventions_update_gamepage_position
 
 
 def roulette_update_gamepage_position():
@@ -42,6 +43,7 @@ def exact_numbers_button_click():
 def secventions_button_click():
     if dpg.does_item_exist("secventions_window"):
         dpg.show_item("secventions_window")
+        secventions_update_gamepage_position()
     else:
         secventions_page()
     dpg.hide_item("roulette_window")
