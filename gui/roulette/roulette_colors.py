@@ -1,7 +1,7 @@
 import time
 import dearpygui.dearpygui as dpg
 
-from gui.roulette.roulette_logic import roulette_spin
+from gui.roulette.roulette_logic import roulette_spin_color
 from gui.player import player
 
 
@@ -53,7 +53,7 @@ def red_button_click():
     color = "Red"
     hide_buttons()
     dpg.set_value("result_text", "")
-    result = roulette_spin(dpg, "roulette_colors_text", "roulette_red_button")
+    result = roulette__color(dpg, "roulette_colors_text", "roulette_red_button")
     if result != color:
         player.money -= bet_amount
         dpg.set_value("result_text", f"You lose.")
@@ -87,7 +87,7 @@ def black_button_click():
     color = "Black"
     hide_buttons()
     dpg.set_value("result_text", "")
-    result = roulette_spin(dpg, "roulette_colors_text", "roulette_black_button")
+    result = roulette_color(dpg, "roulette_colors_text", "roulette_black_button")
     if result != color:
         player.money -= bet_amount
         dpg.set_value("result_text", f"You lose.")
@@ -121,7 +121,7 @@ def green_button_click():
     color = "Green"
     hide_buttons()
     dpg.set_value("result_text", "")
-    result = roulette_spin(dpg, "roulette_colors_text", "roulette_green_button")
+    result = roulette_spin_color(dpg, "roulette_colors_text", "roulette_green_button")
     if result != color:
         player.money -= bet_amount
         dpg.set_value("result_text", f"You lose.")

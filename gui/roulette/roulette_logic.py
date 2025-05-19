@@ -15,7 +15,7 @@ ROULETTE_NUMBERS = [
 ]
 
 
-def roulette_spin(dpg, roulette_text_tag, roulette_button_tag):
+def roulette_spin_color(dpg, roulette_text_tag, roulette_button_tag):
     dpg.set_value(roulette_text_tag, "Spinning...")
 
     steps = random.randint(40, 60)
@@ -38,3 +38,27 @@ def roulette_spin(dpg, roulette_text_tag, roulette_button_tag):
     dpg.disable_item(roulette_button_tag)
 
     return final_color
+
+def roulette_spin_number(dpg, roulette_text_tag, roulette_button_tag):
+    dpg.set_value(roulette_text_tag, "Spinning...")
+
+    steps = random.randint(40, 60)
+    delay = 0.01
+
+    start_index = random.randint(0, len(ROULETTE_NUMBERS) - 1)
+    current_index = start_index
+
+    for i in range(steps):
+        number, color = ROULETTE_NUMBERS[current_index]
+        dpg.set_value(roulette_text_tag, f"Spinning... {number} {color}")
+        time.sleep(delay)
+
+        delay = delay * 1.05
+        current_index = (current_index + 1) % len(ROULETTE_NUMBERS)
+
+    final_number, final_color = ROULETTE_NUMBERS[current_index]
+    dpg.set_value(roulette_text_tag, f"Result: {final_number} {final_color}")
+
+    dpg.disable_item(roulette_button_tag)
+
+    return final_number
