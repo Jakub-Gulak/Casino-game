@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
+import time
 from gui.player import player
+from gui.roulette.roulette_logic import roulette_spin_number
 
 
 def exact_numbers_update_gamepage_position():
@@ -18,7 +20,7 @@ def exact_numbers_update_gamepage_position():
     dpg.configure_item("exact_numbers_back_button", pos=((width - 300) // 2, (height // 2) + 300))
     dpg.configure_item("exact_numbers_spin_button", pos=((width - 300) // 2, (height // 2)))
 
-    dpg.configure_item("result_text", pos=((width - 100) // 2, (height // 2) - 200))
+    dpg.configure_item("numbers_result_text", pos=((width - 100) // 2, (height // 2) - 200))
 
 
 def exact_numbers_bet_input(sender, app_data):
@@ -38,17 +40,53 @@ def exact_numbers_spin_button():
         return
 
     hide_buttons()
-    dpg.set_value("result_text", "")
+    number = int(dpg.get_value("exact_numbers_number_input"))
+    dpg.set_value("numbers_result_text", "")
+
+    result = roulette_spin_number(dpg, "exact_numbers_text", "exact_numbers_spin_button")
+    if result != number:
+        player.money -= bet_amount
+        dpg.set_value("numbers_result_text", f"You lose.")
+    else:
+        player.money = (player.money - bet_amount) + bet_amount * 2
+        dpg.set_value("numbers_result_text", f"You win.")
+
+    dpg.set_value("exact_numbers_bet_input", 0)
+
+    dpg.set_value("exact_numbers_text_money", f"You have {player.money}$ money.")
+    from gui.games_page import update_money_text
+    update_money_text()
+    dpg.show_item("numbers_result_text")
+    time.sleep(2.5)
+    dpg.hide_item("numbers_result_text")
+    if player.get_money() == 0:
+        dpg.hide_item("exact_numbers_spin_button")
+        dpg.show_item("exact_numbers_back_button")
+    else:
+        dpg.enable_item("exact_numbers_spin_button")
+        show_buttons()
+        update_bet_buttons()
 
 
 def hide_buttons():
     dpg.hide_item("exact_numbers_text_money")
-    dpg.hide_item("exact_numbers_text")
     dpg.hide_item("exact_numbers_bet_text")
     dpg.hide_item("exact_numbers_bet_input")
     dpg.hide_item("exact_numbers_number_input")
     dpg.hide_item("exact_numbers_back_button")
     dpg.hide_item("exact_numbers_spin_button")
+    dpg.hide_item("numbers_result_text")
+    dpg.hide_item("numbers_result_text")
+
+
+def show_buttons():
+    dpg.show_item("exact_numbers_text_money")
+    dpg.show_item("exact_numbers_text")
+    dpg.show_item("exact_numbers_bet_text")
+    dpg.show_item("exact_numbers_bet_input")
+    dpg.show_item("exact_numbers_number_input")
+    dpg.show_item("exact_numbers_back_button")
+    dpg.show_item("exact_numbers_spin_button")
 
 
 def exact_numbers_number_input(sender, app_data):
@@ -87,11 +125,12 @@ def exact_numbers_page():
         dpg.add_input_text(width=300, tag="exact_numbers_bet_input", default_value="0", show=True,
                            callback=exact_numbers_bet_input)
 
-        dpg.add_input_int(width=300, tag="exact_numbers_number_input", show=True, default_value=1, min_value=1, max_value=37,
+        dpg.add_input_int(width=300, tag="exact_numbers_number_input", show=True, default_value=1, min_value=1,
+                          max_value=37,
                           callback=exact_numbers_number_input)
 
         dpg.add_text(f"{money_text}", tag='exact_numbers_text_money')
-        dpg.add_text("", tag='result_text')
+        dpg.add_text("", tag='numbers_result_text')
         dpg.add_text("Bet:", tag='exact_numbers_bet_text')
 
         dpg.add_button(label="Spin", width=300, tag="exact_numbers_spin_button", show=False,
