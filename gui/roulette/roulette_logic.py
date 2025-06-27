@@ -39,6 +39,7 @@ def roulette_spin_color(dpg, roulette_text_tag, roulette_button_tag):
 
     return final_color
 
+
 def roulette_spin_number(dpg, roulette_text_tag, roulette_button_tag):
     dpg.set_value(roulette_text_tag, "Spinning...")
 
