@@ -7,6 +7,7 @@ from gui.player import player
 selection_buttons = ["even_button", "odd_button", "under_button", "above_button"]
 currently_selected = None
 
+
 def secventions_update_gamepage_position():
     width = dpg.get_viewport_width()
     height = dpg.get_viewport_height()

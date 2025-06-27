@@ -10,12 +10,15 @@ def exact_numbers_update_gamepage_position():
     dpg.configure_item("exact_numbers_text_money", pos=((width - text_width) // 2.12, height // 4))
     dpg.configure_item("exact_numbers_text", pos=((width - text_width) // 2, height // 6))
 
+    dpg.configure_item("exact_numbers_bet_text", pos=((width - 450) // 2, (height // 2) - 200))
     dpg.configure_item("exact_numbers_bet_input", pos=((width - 300) // 2, (height // 2) - 200))
 
-    dpg.configure_item("exact_numbers_bet_text", pos=((width - 450) // 2, (height // 2) - 200))
+    dpg.configure_item("exact_numbers_number_input", pos=((width - 300) // 2, (height // 2) - 100))
 
     dpg.configure_item("exact_numbers_back_button", pos=((width - 300) // 2, (height // 2) + 300))
     dpg.configure_item("exact_numbers_spin_button", pos=((width - 300) // 2, (height // 2)))
+
+    dpg.configure_item("result_text", pos=((width - 100) // 2, (height // 2) - 200))
 
 
 def exact_numbers_bet_input(sender, app_data):
@@ -30,7 +33,33 @@ def exact_numbers_bet_input(sender, app_data):
 
 
 def exact_numbers_spin_button():
-    pass
+    bet_amount = int(dpg.get_value("exact_numbers_bet_input"))
+    if bet_amount > player.get_money():
+        return
+
+    hide_buttons()
+    dpg.set_value("result_text", "")
+
+
+def hide_buttons():
+    dpg.hide_item("exact_numbers_text_money")
+    dpg.hide_item("exact_numbers_text")
+    dpg.hide_item("exact_numbers_bet_text")
+    dpg.hide_item("exact_numbers_bet_input")
+    dpg.hide_item("exact_numbers_number_input")
+    dpg.hide_item("exact_numbers_back_button")
+    dpg.hide_item("exact_numbers_spin_button")
+
+
+def exact_numbers_number_input(sender, app_data):
+    try:
+        value = int(app_data)
+        if value < 1:
+            dpg.set_value(sender, 1)
+        elif value > 37:
+            dpg.set_value(sender, 37)
+    except ValueError:
+        dpg.set_value(sender, 1)
 
 
 def update_bet_buttons():
@@ -58,7 +87,11 @@ def exact_numbers_page():
         dpg.add_input_text(width=300, tag="exact_numbers_bet_input", default_value="0", show=True,
                            callback=exact_numbers_bet_input)
 
+        dpg.add_input_int(width=300, tag="exact_numbers_number_input", show=True, default_value=1, min_value=1, max_value=37,
+                          callback=exact_numbers_number_input)
+
         dpg.add_text(f"{money_text}", tag='exact_numbers_text_money')
+        dpg.add_text("", tag='result_text')
         dpg.add_text("Bet:", tag='exact_numbers_bet_text')
 
         dpg.add_button(label="Spin", width=300, tag="exact_numbers_spin_button", show=False,
